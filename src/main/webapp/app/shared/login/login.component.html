@@ -1,0 +1,70 @@
+<div class="modal-header">
+    <h4 class="modal-title">Sign in</h4>
+    <button aria-label="Close" data-dismiss="modal" class="close" type="button" (click)="activeModal.dismiss('closed')">
+        <span aria-hidden="true">x</span>
+    </button>
+</div>
+<div id = "login" class="modal-body">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="alert alert-danger" *ngIf="authenticationError">
+                <strong>Failed to sign in!</strong> Please check your credentials and try again.
+            </div>
+            <div class="alert alert-danger" *ngIf="error">
+                <strong>OTP </strong> Not found.
+            </div>
+            <div class="alert alert-danger" *ngIf="expire">
+                <strong>OTP </strong> Expired.
+            </div>
+        </div>
+        <div class="col-md-8">
+            <form class="form" role="form" (ngSubmit)="changeOTP()">
+                <div class="form-group">
+                    <label class="username-label" for="username">Login</label>
+                    <input type="text" class="form-control" name="username" id="username" placeholder="Your username"
+                           [(ngModel)]="username">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" name="password" id="password" placeholder="Your password"
+                           [(ngModel)]="password">
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label" for="rememberMe">
+                        <input class="form-check-input" type="checkbox" name="rememberMe" id="rememberMe" [(ngModel)]="rememberMe" checked>
+                        <span>Remember me</span>
+                    </label>
+                </div>
+                <button type="button" (click)="startTimer();login()"
+                        class="btn btn-primary">Sign in</button>
+
+                <p></p>
+
+                <ng-container *ngIf="show">
+                    <div class="alert alert-success">
+                        <div class="form-group">
+                            <label class="username-label" for="otpnumber"><strong>OTP</strong></label>
+                            <input type="text" class="form-control" name="otpnumber" id="otpnumber" placeholder="Your OTP"
+                                   [(ngModel)]="otpnumber">
+                        </div>
+                        <div style="padding-left:5px">
+                            <button type="submit"  class="btn btn-primary">Submit</button>
+                            <button type="button" (click)="resendOTP()" class="btn btn-primary">Resend</button>
+                        </div>
+                        <div style="padding-left:5px">{{timeLeft}} Seconds Left....</div>
+                    </div>
+                </ng-container>
+
+            </form>
+
+            <p></p>
+            <div class="alert alert-warning">
+                <a class="alert-link" (click)="requestResetPassword()">Did you forget your password?</a>
+            </div>
+            <div class="alert alert-warning">
+                <span>You don't have an account yet?</span>
+                <a class="alert-link" (click)="register()">Register a new account</a>
+            </div>
+        </div>
+    </div>
+</div>
